@@ -1,16 +1,23 @@
-import asyncore
+"""udp echo server"""
+from asyncore import dispatcher
+from asyncore import loop
 import socket
 
 
-class EchoServer(asyncore.dispatcher):
+class EchoServer(dispatcher):
+    """EchoServer class"""
+
     def __init__(self, host, port):
-        asyncore.dispatcher.__init__(self)
+        dispatcher.__init__(self)
         self.create_socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.set_reuse_addr()
         self.bind((host, port))
 
-    def api_handler(self, data, addr):
-        print 'data:', data
+    # make pylint happy
+    @classmethod
+    def api_handler(cls, data, addr):
+        """handle api"""
+        print '%s data:' % repr(addr), data
         return data
 
     def handle_read(self):
@@ -20,8 +27,9 @@ class EchoServer(asyncore.dispatcher):
         if rsp is not None:
             self.sendto(rsp, addr)
 
+
 if __name__ == '__main__':
     # Host "" means to bind all interface
     # Port 0 means to select an arbitrary unused port
-    server = EchoServer('', 1234)
-    asyncore.loop()
+    EchoServer('', 1234)
+    loop()

@@ -1,16 +1,23 @@
-import asyncore
+"""udp client example"""
+from asyncore import dispatcher
+from asyncore import loop
 import socket
 
 
-class EchoClient(asyncore.dispatcher):
+class EchoClient(dispatcher):
+    """udp client class"""
+
     def __init__(self, host, port):
-        asyncore.dispatcher.__init__(self)
+        dispatcher.__init__(self)
         self.create_socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.connect((host, port))
         self.send("0000")
 
-    def api_handler(self, data, addr):
-        print 'data:', data
+    # make pylint happy
+    @classmethod
+    def api_handler(cls, data, addr):
+        """hande api"""
+        print '%s data:' % repr(addr), data
         return None
 
     def handle_read(self):
@@ -20,6 +27,7 @@ class EchoClient(asyncore.dispatcher):
         if rsp is not None:
             self.sendto(rsp, addr)
 
+
 if __name__ == '__main__':
-    client = EchoClient('127.0.0.1', 1234)
-    asyncore.loop()
+    EchoClient('127.0.0.1', 1234)
+    loop()
