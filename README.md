@@ -9,3 +9,7 @@
 usage:
 
     pylint --rcfile=google-pylint.rc *.py
+
+## yapf
+
+    yapf -i --style google gevent/queue.py
