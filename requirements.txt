@@ -6,3 +6,6 @@ yapf
 
 # for gevent
 gevent
+
+# for mongodb
+pymongo
