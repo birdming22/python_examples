@@ -9,3 +9,6 @@ gevent
 
 # for mongodb
 pymongo
+
+# for parser
+ply
