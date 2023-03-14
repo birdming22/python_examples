@@ -35,12 +35,12 @@ def main():
         template.append(row)
 
     # 設定日期為 2022 年 1 月 1 日
-    start_date = datetime(2021, 6, 1)
+    start_date = datetime(2022, 1, 1)
     row_num = 0
     row_offset = 4
     for working_date in generate_weekdays(start_date):
         year = int(working_date.strftime('%Y'))
-        if year >= 2022:
+        if year >= 2023:
             break
         working_date += timedelta(hours=13)
         for row in template:
@@ -54,7 +54,7 @@ def main():
             row_num += 1
 
     # 將修改後的時間寫回到Excel檔案中
-    excel_file.save('2022.xlsx')
+    excel_file.save('2023.xlsx')
 
 if __name__ == '__main__':
     main()
